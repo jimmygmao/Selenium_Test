@@ -25,21 +25,36 @@ public class Yard extends Frame{
 				System.exit(0);
 			}
 		});
+		new Thread(new PaintThread()).start();
 	}
 
 	public void paint(Graphics g) {
 		Color c = g.getColor();
-		g.setColor(Color.blue);
+		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, LINE * CELL, VERTICAL * CELL);
 		for (int i = 1; i < LINE; i++) {
-			g.setColor(Color.red);
+			g.setColor(Color.DARK_GRAY);
 			g.drawLine(0, CELL * i, VERTICAL * CELL, CELL * i);
 		}
 		for (int i = 1; i < VERTICAL; i++) {
-			g.setColor(Color.red);
+			g.setColor(Color.DARK_GRAY);
 			g.drawLine(CELL * i, 0, CELL * i, LINE * CELL);
 		}
 		g.setColor(c);
-		 s.draw(g);
+		s.draw(g);
+	}
+	
+	private class PaintThread implements Runnable{
+		public void run() {
+			while(true){
+				repaint();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		
 	}
 }

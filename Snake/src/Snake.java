@@ -61,6 +61,8 @@ public class Snake {
 			n.draw(g);
 		}
 	}
+		
+
 	
 	private class Node {
 		int w = Yard.CELL;
@@ -78,7 +80,7 @@ public class Snake {
 
 		private void draw(Graphics g) {
 			Color c = g.getColor();
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			g.fillRect(Yard.CELL * col, Yard.CELL * row, w, h);
 			g.setColor(c);
 		}
