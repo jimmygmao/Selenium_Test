@@ -6,9 +6,9 @@ import java.awt.event.WindowEvent;
 
 
 public class Yard extends Frame{
-	private static final int LINE=50;
-	private static final int VERTICAL=50;
-	private static final int CELL=10;
+	public static final int LINE=50;//行
+	public static final int VERTICAL=50;//列
+	public static final int CELL=10;//格子
 	public static void main(String[] args){
 		new Yard().PageTable();
 	}
