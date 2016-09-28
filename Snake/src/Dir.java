@@ -1,3 +1,3 @@
 public enum Dir {
-	L,U,R,D
+	L,U,R,D,STOP
 }

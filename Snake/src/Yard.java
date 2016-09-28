@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,14 +10,27 @@ import java.awt.event.WindowEvent;
 
 
 public class Yard extends Frame{
+	PaintThread paintThread=new PaintThread();
 	public static final int LINE=30;//行
 	public static final int VERTICAL=30;//列
 	public static final int CELL=15;//格子
 	
-	Snake s=new Snake();
+	Snake s=new Snake(this);
 	Egg e=new Egg();
+	
 	Image OffPictureImage=null;
 	
+	private boolean gameOver=false;
+	private Font FontGameOver=new Font("宋体",Font.BOLD,50);
+	private int score=0;
+	public int getscore() {
+		return score;
+	}
+	public void setscore(int score) {
+		this.score = score;
+	}
+
+
 	public static void main(String[] args){
 		new Yard().PageTable();
 	}
@@ -33,7 +47,7 @@ public class Yard extends Frame{
 			}
 		});
 		this.addKeyListener(new KeyMonitor());
-		new Thread(new PaintThread()).start();
+		new Thread(paintThread).start();
 	}
 
 	
@@ -50,10 +64,18 @@ public class Yard extends Frame{
 			g.setColor(Color.DARK_GRAY);
 			g.drawLine(CELL * i, 0, CELL * i, LINE * CELL);
 		}
+		g.setColor(Color.YELLOW);
+		g.drawString("分数："+score, 10, 60);
+		if(gameOver){
+			g.setFont(FontGameOver);
+			g.drawString("game over", 100, 250);
+			paintThread.pause();
+		}
 		g.setColor(c);
 		s.draw(g);
 		e.draw(g);
 		s.eat(e);
+
 	}
 	
 	public void udate(Graphics g){
@@ -65,22 +87,44 @@ public class Yard extends Frame{
 		g.drawImage(OffPictureImage, 0, 0, null);
 	}
 	
+	public void stop(){
+		gameOver=true;
+	}
+	
 	private class KeyMonitor extends KeyAdapter{
 		public void keyPressed(KeyEvent e){
+			int key=e.getKeyCode();
+			if(key==KeyEvent.VK_F2){
+				paintThread.reStart();
+			}
 			s.keyPressed(e);
 		}
 	}
 	
 	private class PaintThread implements Runnable{
+		private boolean runing=true;
+		private boolean pause = false;
 		public void run() {
-			while(true){
-				repaint();
+			while(runing){
+				if(pause){
+					continue;
+				}else{
+					repaint();
+				}
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}	
+		}
+		public void pause() {
+			pause = true;
+		}
+		public void reStart(){
+			pause=false;
+			s=new Snake(Yard.this);
+			gameOver=false;
 		}
 	}
 }

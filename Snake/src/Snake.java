@@ -7,11 +7,13 @@ public class Snake {
 	private Node head = null;// Í·
 	private Node tail;// Î²°Í
 	private int size = 0;// ³¤¶È
-	private Node n=new Node(20,20,Dir.L);
-	public Snake(){
+	private Node n=new Node(20,20,Dir.STOP);
+	Yard y;
+	public Snake(Yard y){
 		head=n;
 		tail=n;
 		size=1;
+		this.y=y;
 	}
 	
 	public void addToTail(){
@@ -29,7 +31,10 @@ public class Snake {
 		case D:
 			node =new Node(tail.row-1,tail.col,tail.dir);
 			break;
-		}
+		case STOP:
+			node =new Node(tail.row,tail.col,tail.dir);
+			break;
+		}	
 		tail.next=node;
 		node.prev=tail;
 		tail=node;
@@ -51,7 +56,11 @@ public class Snake {
 		case D:
 			node =new Node(head.row+1,head.col,head.dir);
 			break;
+		case STOP:
+			node =new Node(tail.row,tail.col,tail.dir);
+			break;
 		}
+		
 		node.next=head;
 		head.prev=node;
 		head=node;
@@ -61,14 +70,15 @@ public class Snake {
 		if(size<=0){
 			return;
 		}
+		move();
 		for(Node n=head;n!=null;n=n.next){
 			n.draw(g);
 		}
-		move();
 	}
 	private void move(){
 		 addToHead();
 		 deleteFromTail();
+		 chevkDead();
 	}
 	private void deleteFromTail(){
 		if(size==0){
@@ -87,6 +97,17 @@ public class Snake {
 		if(this.getRevt().intersects(e.getRevt())){
 			e.reAppear();
 			this.addToHead();
+			y.setscore(y.getscore()+5);
+		}
+	}
+	private void chevkDead(){
+		if(head.row<1||head.col<0||head.row>Yard.LINE+1||head.col>Yard.VERTICAL+2){
+			y.stop();
+		}
+		for(Node n=head.next;n!=null;n=n.next){
+			if(head.row==n.row&&head.col==n.col){
+				y.stop();
+			}
 		}
 	}
 	
@@ -116,16 +137,24 @@ public class Snake {
 		int key=e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_LEFT:
-			head.dir=Dir.L;
+			if(head.dir!=Dir.R){
+				head.dir=Dir.L;
+			}
 			break;
 		case KeyEvent.VK_UP:
-			head.dir=Dir.U;
+			if(head.dir!=Dir.D){
+				head.dir=Dir.U;
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
-			head.dir=Dir.R;
+			if(head.dir!=Dir.L){
+				head.dir=Dir.R;
+			}
 			break;
 		case KeyEvent.VK_DOWN:
-			head.dir=Dir.D;
+			if(head.dir!=Dir.U){
+				head.dir=Dir.D;
+			}
 			break;
 		}
 	}
