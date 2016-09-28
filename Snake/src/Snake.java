@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 
 public class Snake {
 	private Node head = null;// 头
@@ -29,11 +31,12 @@ public class Snake {
 			break;
 		}
 		tail.next=node;
+		node.prev=tail;
 		tail=node;
 		size++;
 	}
 	
-	public void addTohead(){
+	public void addToHead(){
 		Node node=null;
 		switch (head.dir) {
 		case L:
@@ -50,6 +53,7 @@ public class Snake {
 			break;
 		}
 		node.next=head;
+		head.prev=node;
 		head=node;
 		size++;
 	}
@@ -60,9 +64,31 @@ public class Snake {
 		for(Node n=head;n!=null;n=n.next){
 			n.draw(g);
 		}
+		move();
 	}
+	private void move(){
+		 addToHead();
+		 deleteFromTail();
+	}
+	private void deleteFromTail(){
+		if(size==0){
+			return;
+		}
+		tail=tail.prev;
+		tail.next=null;
 		
-
+	}
+	
+	public Rectangle getRevt(){
+		return new Rectangle(Yard.CELL * head.col, Yard.CELL * head.row, head.w,head.h);	
+	}
+	
+	public void eat(Egg e){
+		if(this.getRevt().intersects(e.getRevt())){
+			e.reAppear();
+			this.addToHead();
+		}
+	}
 	
 	private class Node {
 		int w = Yard.CELL;
@@ -70,6 +96,7 @@ public class Snake {
 		int row;// 第几行
 		int col;// 第几列
 		Dir dir =Dir.L;
+		Node prev=null;
 		Node next=null;
 
 		Node(int x, int y, Dir dir) {
@@ -83,6 +110,23 @@ public class Snake {
 			g.setColor(Color.BLACK);
 			g.fillRect(Yard.CELL * col, Yard.CELL * row, w, h);
 			g.setColor(c);
+		}
+	}
+	public void keyPressed(KeyEvent e){
+		int key=e.getKeyCode();
+		switch (key) {
+		case KeyEvent.VK_LEFT:
+			head.dir=Dir.L;
+			break;
+		case KeyEvent.VK_UP:
+			head.dir=Dir.U;
+			break;
+		case KeyEvent.VK_RIGHT:
+			head.dir=Dir.R;
+			break;
+		case KeyEvent.VK_DOWN:
+			head.dir=Dir.D;
+			break;
 		}
 	}
 }
