@@ -3,11 +3,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class baidu {
+public class Baidu {
 
 	public static void main(String[] args) {
-		System.out.println("srart selenium");
-		System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe");
+		ChromeConfigure d =new ChromeConfigure();
+		d.chromeConfigure();
 		WebDriver driver=new ChromeDriver();
 		driver.get("http://www.baidu.com");
 	//	driver.findElement(By.id("kw")).sendKeys("selenium java");

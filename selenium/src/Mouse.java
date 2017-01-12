@@ -7,7 +7,8 @@ import org.openqa.selenium.interactions.Actions;
 
 public class Mouse {
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe");
+		ChromeConfigure d =new ChromeConfigure();
+		d.chromeConfigure();
 		WebDriver driver=new ChromeDriver();
 /*		driver.get("http://pan.baidu.com/");
 		try {
