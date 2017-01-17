@@ -9,7 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class Test7z {
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe");
+		ChromeConfigure d =new ChromeConfigure();
+		d.chromeConfigure();
 		WebDriver driver=new ChromeDriver();
 		driver.get("https://www.wxw7z.com/");
 		driver.findElement(By.linkText("商品分类")).click();

@@ -1,3 +1,5 @@
+import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,17 +8,57 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class Windows {
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe");
+		ChromeConfigure d =new ChromeConfigure();
+		d.chromeConfigure();
 		WebDriver driver=new ChromeDriver();
 		driver.get("https://www.baidu.com/");
+		String sreach_handle=driver.getWindowHandle();
+		System.out.println(sreach_handle);
 		driver.findElement(By.xpath("//*[@id='u1']/a[7]")).click();
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
 		driver.findElement(By.xpath("//a[@class='pass-reglink']")).click();
+		
+		Set<String> handles=driver.getWindowHandles();
+		for(String handle:handles){
+			if(handle.equals(sreach_handle)==false){
+				driver.switchTo().window(handle);
+				System.out.println("注册页面");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				driver.findElement(By.id("TANGRAM__PSP_3__userName")).clear();
+				driver.findElement(By.id("TANGRAM__PSP_3__userName")).sendKeys("我喜欢Chrome");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				driver.close();
+			}
 		}
-
+		for(String handle:handles){
+			if(handle.equals(sreach_handle)){
+				driver.switchTo().window(handle);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				driver.findElement(By.className("close-btn")).click();
+				driver.findElement(By.id("kw")).sendKeys("日语我爱你");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				driver.close();
+			}
+		}
+		}
 }

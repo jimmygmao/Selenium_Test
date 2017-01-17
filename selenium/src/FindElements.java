@@ -9,7 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class FindElements {
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe");
+		ChromeConfigure d =new ChromeConfigure();
+		d.chromeConfigure();
 		WebDriver driver=new ChromeDriver();
 		File file=new File("../selenium/src/Checkbox.html");
 		String filePath=file.getAbsolutePath();
