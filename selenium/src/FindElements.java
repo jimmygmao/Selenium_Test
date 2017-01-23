@@ -43,7 +43,7 @@ public class FindElements {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//刷新
+		//刷新一下
 	//	driver.navigate().refresh();
 		//去掉最后一个勾
 		//Xpath定位
