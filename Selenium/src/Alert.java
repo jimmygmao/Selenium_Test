@@ -5,6 +5,10 @@ import org.openqa.selenium.interactions.Actions;
 
 
 public class Alert {
+	/**
+	 * ЪѓБъ
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		ChromeConfigure d=new ChromeConfigure();
 		d.chromeConfigure();
