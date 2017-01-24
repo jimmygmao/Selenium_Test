@@ -11,36 +11,47 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class ChromeConfigure {
 	public static String CHROMEADDRESS="";
+	public static final String HOMECOMPUTERNAME="lenovo";
+	public static final String COMPANYCOMPUTERNAME="JimmyDeng";
 	public static final String CHROMEADDRESS1 = "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe";
 	public static final String CHROMEADDRESS2 = "C:/Users/jimmy/AppData/Local/Google/Chrome/Application/chromedriver.exe";
 	public static String PERSONALATTRIBUTES="";
 	public static final String PERSONALATTRIBUTES1="--user-data-dir=C:/Users/lenovo/AppData/Local/Google/Chrome/User Data";
 	public static final String PERSONALATTRIBUTES2="--user-data-dir=C:/Users/jimmy.deng/AppData/Local/Google/Chrome/User Data";
-	
+	/**
+	 * 判断电脑名字
+	 */
 	public void Demo(){
 		InetAddress a;
 		String b = null;
 		try {
 			a = InetAddress.getLocalHost();
 			b=a.getHostName();
-			System.out.println();
+			System.out.println(b);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		if(b.equals("JimmyDeng")){
-			CHROMEADDRESS=CHROMEADDRESS2;
-			PERSONALATTRIBUTES=PERSONALATTRIBUTES2;
-		}else if(b.equals("lenovo")){
+		if(b.equals(HOMECOMPUTERNAME)){
 			CHROMEADDRESS=CHROMEADDRESS1;
 			PERSONALATTRIBUTES=PERSONALATTRIBUTES1;
+		}else if(b.equals(COMPANYCOMPUTERNAME)){
+			CHROMEADDRESS=CHROMEADDRESS2;
+			PERSONALATTRIBUTES=PERSONALATTRIBUTES2;
 		}
 	}
 	
+	/**
+	 * CHromeDriver地址
+	 */
 	public void chromeConfigure() {
 		Demo();
 		System.setProperty("webdriver.chrome.driver",CHROMEADDRESS);
 	}
 
+	/**
+	 * 设置高度宽度
+	 * @param driver
+	 */
 	public void maximise(WebDriver driver) {
 		final JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.open('','testwindow','width=400,height=200')");
@@ -58,9 +69,13 @@ public class ChromeConfigure {
 		System.out.println(Toolkit.getDefaultToolkit().getScreenSize()
 				.getHeight());
 	}
+	/**
+	 * 设置谷歌加载用户
+	 * @return
+	 */
 	public DesiredCapabilities download(){
-		Demo();
-		String downloadFilepath = "F:/123";
+		chromeConfigure();
+		String downloadFilepath = "F:/";
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		ChromeOptions options = new ChromeOptions();
 		//0表示不弹窗

@@ -4,14 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 
 public class Test7z {
 
 	public static void main(String[] args) {
 		ChromeConfigure d =new ChromeConfigure();
-		d.chromeConfigure();
-		WebDriver driver=new ChromeDriver();
+		DesiredCapabilities cap=d.download();
+		WebDriver driver = new ChromeDriver(cap);
 		driver.get("https://www.wxw7z.com/");
 		driver.findElement(By.linkText("商品分类")).click();
 		driver.findElement(By.className("goodsCat_btn")).click();

@@ -7,7 +7,6 @@ public class Download {
 
 	public static void main(String[] args) {
 		ChromeConfigure d =new ChromeConfigure();
-		d.chromeConfigure();
 		DesiredCapabilities cap=d.download();
 		WebDriver driver = new ChromeDriver(cap);
 		driver.get("http://im.qq.com/pcqq/");
