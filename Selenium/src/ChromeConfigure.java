@@ -11,7 +11,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class ChromeConfigure {
 	public static String CHROMEADDRESS="";
+<<<<<<< HEAD
+	public static final String HOMECOMPUTERNAME="Lenovo-PC";
+=======
 	public static final String HOMECOMPUTERNAME="lenovo";
+>>>>>>> branch 'master' of https://github.com/jimmygmao/Selenium.git
 	public static final String COMPANYCOMPUTERNAME="JimmyDeng";
 	public static final String CHROMEADDRESS1 = "C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe";
 	public static final String CHROMEADDRESS2 = "C:/Users/jimmy/AppData/Local/Google/Chrome/Application/chromedriver.exe";
