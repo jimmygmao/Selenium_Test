@@ -23,7 +23,7 @@ public class ChromeConfigure {
 	/**
 	 * ÅÐ¶ÏµçÄÔÃû×Ö
 	 */
-	public void Demo(){
+	public static void Demo(){
 		InetAddress a;
 		String b = null;
 		try {
@@ -45,7 +45,7 @@ public class ChromeConfigure {
 	/**
 	 * CHromeDriverµØÖ·
 	 */
-	public void chromeConfigure() {
+	public static void chromeConfigure() {
 		Demo();
 		System.setProperty("webdriver.chrome.driver",CHROMEADDRESS);
 	}
